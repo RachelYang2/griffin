@@ -58,12 +58,12 @@ define(['./module'], function (controllers) {
           return false;
         } else{
           var value = keyword.trim().toLowerCase();
-          return str.trim().toLowerCase().includes(value);
+          return str.trim().toLowerCase().indexOf(value) > -1;
         }
       };
 
       var findValue = function(keyword, assetItem) {
-        var date = $filter('date')(assetItem.timestamp, 'M/d/yy h:mm a', '-0700')
+        var date = $filter('date')(assetItem.timestamp, 'M/d/yy h:mm a')
         return include(keyword, assetItem.assetName)
           || include(keyword, assetItem.assetType)
           || include(keyword, assetItem.owner)

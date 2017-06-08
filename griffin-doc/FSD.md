@@ -8,7 +8,6 @@ Griffin is a open source Data Quality solution for distributed data systems at a
 - Data profiling and anomaly detection
 - Data quality lineage from upstream to downstream data systems.
 - Data quality health monitoring visualization
-- Shared infrastructure resource management
 
 ## Background and strategic fit
 

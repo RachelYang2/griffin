@@ -18,10 +18,7 @@ define(['./module'], function(controllers) {
 
         var echarts = require('echarts');
 
-        pageInit();
-
-
-        function pageInit() {
+        $rootScope.pageInit = function() {
           var url = $config.uri.statistics;
 
           $http.get(url).success(function(res) {
@@ -33,7 +30,9 @@ define(['./module'], function(controllers) {
           });
 
 
-        }
+        };
+
+        $rootScope.pageInit();
 
         var renderDataAssetPie = function(status) {
             resizePieChart();
@@ -102,6 +101,7 @@ define(['./module'], function(controllers) {
           });
         }
 
+
         $(window).resize(function() {
             console.log('sidebar resize');
             if(window.innerWidth < 992) {
@@ -128,12 +128,29 @@ define(['./module'], function(controllers) {
                 }
               })
             });
+
+            resetTextWidth();
         }
 
         function resizePieChart() {
           $('#data-asset-pie').css({
               height: $('#data-asset-pie').parent().width(),
               width: $('#data-asset-pie').parent().width()
+          });
+        }
+
+        function resetTextWidth(){
+          // var h4Left = $('h4.side-metrics').position().left;
+          var h4Width = $('h4.side-metrics').width();
+          $.each($('.sb-text'), function(index, elem){
+            //console.log(elem);
+            var otherWithTotal = 0;
+            var siblings = $(elem).siblings();
+            $.each(siblings, function(idx, item){
+              otherWithTotal += item.offsetWidth;
+            });
+            var size = h4Width - otherWithTotal - 30;
+            $(elem).width(size);
           });
         }
     }

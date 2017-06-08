@@ -1,7 +1,18 @@
 language: java
-script: mvn clean deploy -DskipTests --settings travis-settings.xml
+install:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install -g requirejs
+script:
+  - r.js -o griffin-ui/build.js
+  - mvn clean deploy --quiet --settings travis-settings.xml
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
 jdk:
-- oraclejdk7
+- oraclejdk8
+addons:
+  sonarqube: true
 env:
   global:
   - SONATYPE_USERNAME=luzx02

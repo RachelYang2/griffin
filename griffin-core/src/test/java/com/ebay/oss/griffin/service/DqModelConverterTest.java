@@ -1,19 +1,27 @@
 package com.ebay.oss.griffin.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import com.ebay.oss.griffin.service.DqModelConverter;
+import com.ebay.oss.griffin.domain.DqModel;
 
 
 public class DqModelConverterTest {
 
-    private DqModelConverter converter;
-    
-    @Test
-    public void test_voOf_null() {
-        converter = new DqModelConverter();
-        assertNull(converter.voOf(null));
-    }
+	private DqModelConverter converter;
+
+	@Before
+	public void setUp() {
+		converter = new DqModelConverter();
+	}
+
+
+	@Test
+	public void testVoOf() {
+		assertNull(converter.voOf(null));
+		assertNotNull(converter.voOf(new DqModel()));
+	}
 }

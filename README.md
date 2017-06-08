@@ -1,8 +1,11 @@
-## Griffin [![Travic-CI](https://api.travis-ci.org/eBay/griffin.svg)](https://travis-ci.org/eBay/griffin)
+## Griffin [![Travic-CI](https://api.travis-ci.org/eBay/griffin.svg)](https://travis-ci.org/eBay/griffin) [![Coverage Status](https://coveralls.io/repos/github/eBay/griffin/badge.svg?branch=dev)](https://coveralls.io/github/eBay/griffin?branch=dev)
 
+<<<<<<< HEAD
 We are in Apache Incubator now, please visit [Apache Griffin](https://github.com/apache/incubator-griffin) for latest updates.
 
 
+=======
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
 Griffin is a Data Quality solution for distributed data systems at any scale in both streaming and batch data context. It provides a framework process for defining data quality model, executing data quality measurement, automating data profiling and validation, as well as an unified data quality visualization across multiple data systems. You can access our home page [here](https://ebay.github.io/griffin/).
 
 
@@ -56,14 +59,21 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
    mongorestore /db:unitdb0 /dir:<dir of griffin-doc>/db/unitdb0
    ```
 
+<<<<<<< HEAD
 4. Install [Hadoop](http://apache.claz.org/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz) (2.6.0 or later), you can get some help [here](https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html).  
     Make sure you have the permission to use command "hadoop".   
     Create an empty directory in hdfs as your hdfs path, and then create running and history directory in it
+=======
+4. Install [Hadoop](http://mirror.stjschools.org/public/apache/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz) (2.7 or later versions), you can get some help [here](https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html).  
+   Make sure you have the permission to use command "hadoop".   
+   Create an empty directory in hdfs as your hdfs path, and then create running and history directory in it
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
     ```
     hadoop fs -mkdir <your hdfs path>
     hadoop fs -mkdir <your hdfs path>/running
     hadoop fs -mkdir <your hdfs path>/history
     ```
+<<<<<<< HEAD
 5. Install [Spark](http://spark.apache.org/downloads.html) (version 1.6.x, griffin does not support 2.0.x at current), if you want to install Pseudo Distributed/Single Node Cluster, you can get some help [here](http://why-not-learn-something.blogspot.com/2015/06/spark-installation-pseudo.html).  
     Make sure you have the permission to use command "spark-shell".
 6. Install [Hive](http://apache.claz.org/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz) (version 1.2.1 or later), you can get some help [here](https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-RunningHive).  
@@ -71,17 +81,34 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
 7. Create a working directory, and it will be **your local path** now.
 8. In your local path, put your data into Hive.  
     First, you need to create some directories in hdfs.  
+=======
+5. Install [Spark](http://www.webhostingjams.com/mirror/apache/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz) (version 2.0.0), if you want to install Pseudo Distributed/Single Node Cluster, you can get some help [here](http://why-not-learn-something.blogspot.com/2015/06/spark-installation-pseudo.html).  
+   Make sure you have the permission to use command "spark-shell".
+6. Install [Hive](http://mirrors.koehn.com/apache/hive/hive-2.1.0/apache-hive-2.1.0-bin.tar.gz) (version 2.1.0), you can get some help [here](https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-RunningHive).  
+   Make sure you have the permission to use command "hive".
+7. Create a working directory, and it will be **your local path** now.
+8. In your local path, put your data into Hive.  
+   First, you need to create some directories in hdfs
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
     ```
     hadoop fs -mkdir /tmp
     hadoop fs -mkdir /user/hive/warehouse
     hadoop fs -chmod g+w /tmp
     hadoop fs -chmod g+w /user/hive/warehouse
     ```
+<<<<<<< HEAD
     Then, run the following command in **your local path**  
     ```
     schematool -dbType derby -initSchema
     ```
     Now you can put your data into Hive by running "hive" here. You can get sample data [here](https://github.com/eBay/griffin/tree/master/griffin-doc/hive), then put into hive as following commands  
+=======
+   Then, run the following command in **your local path**
+    ```
+    schematool -dbType derby -initSchema
+    ```
+   Now you can put your data into Hive by running "hive" here. You can get sample data [here](https://github.com/eBay/griffin/tree/master/griffin-doc/hive), then put into hive as following commands
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
 
     ```
     CREATE TABLE users_info_src (
@@ -96,6 +123,7 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
     FIELDS TERMINATED BY '|'
     STORED AS TEXTFILE;
 
+<<<<<<< HEAD
     LOAD DATA LOCAL INPATH '<your data path>/users_info_src.dat' OVERWRITE INTO TABLE users_info_src;
 
     CREATE TABLE users_info_target (
@@ -125,10 +153,27 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
    You can edit the [demo script files](https://github.com/eBay/griffin/tree/master/griffin-doc/hive/script/) as following.
 
    [env.sh](https://github.com/eBay/griffin/blob/master/docker/griffin/script/env.sh)  
+=======
+    LOAD DATA LOCAL INPATH '<your data path>/MovieLensSample_Target.dat' OVERWRITE INTO TABLE movie_target;
+    ```
+
+    If you use hive command mode to input data, remember to create _SUCCESS file in hdfs table path as following
+
+    ```
+    hadoop fs -touchz /user/hive/warehouse/movie_source/_SUCCESS
+    hadoop fs -touchz /user/hive/warehouse/movie_target/_SUCCESS
+    ```
+9. You can create your own model, build your jar file, and put it in **your local path**.  
+   (If you want to use our default models, please skip this step)
+10. Currently we need to run the jobs automatically by script files, you need to set your own parameters in the script files and run it. You can edit the [demo script files](https://github.com/eBay/griffin/tree/master/griffin-doc/hive/script/) as following
+
+   [env.sh](https://github.com/eBay/griffin/tree/master/griffin-doc/hive/script/env.sh)
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
    ```
    HDFS_WORKDIR=<your hdfs path>/running
    ```
 
+<<<<<<< HEAD
    [griffin_jobs.sh](https://github.com/eBay/griffin/blob/master/docker/griffin/script/griffin_jobs.sh)  
    ```
    spark-submit --class org.apache.griffin.accuracy.Accu --master yarn-client --queue default --executor-memory 1g --num-executors 4 $GRIFFIN_HOME/griffin-models.jar  $lv1dir/cmd.txt $lv1dir/ >> $logfile 2>&1
@@ -141,6 +186,23 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
    Put these script files in **your local path**.  
 
 11. Open [application.properties](https://github.com/eBay/griffin/tree/master/griffin-core/src/main/resources/application.properties) file, read the comments and specify the properties correctly. Or you can edit it as following.  
+=======
+   [griffin_jobs.sh](https://github.com/eBay/griffin/tree/master/griffin-doc/hive/script/griffin_jobs.sh)
+   ```
+   spark-submit --class com.ebay.griffin.Accu33 --master yarn --queue default --executor-memory 512m --num-executors 10 griffin-models-0.0.1-SNAPSHOT.jar  $lv1dir/cmd.txt $lv1dir/
+   spark-submit --class com.ebay.griffin.Vali3 --master yarn --queue default --executor-memory 512m --num-executors 10 griffin-models-0.0.1-SNAPSHOT.jar  $lv1dir/cmd.txt $lv1dir/
+   ```
+
+   These commands submit the jobs to spark, if you want to try your own model or modify some parameters, please edit it.
+   If you want to use your own model, change "griffin-models-0.0.1-SNAPSHOT.jar" to "your path/your model.jar", and change the class name.  
+
+   Put these script files in **your local path**, run griffin_regular_run.sh as following
+   ```
+   nohup ./griffin_regular_run.sh &
+   ```
+
+11. Open [application.properties](https://github.com/eBay/griffin/tree/master/griffin-core/src/main/resources/application.properties) file, read the comments and specify the properties correctly. Or you can edit it as following
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
    ```
    env=prod
    job.local.folder=<your local path>/tmp
@@ -148,6 +210,7 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
    job.hdfs.runningfoldername=running
    job.hdfs.historyfoldername=history
    ```
+<<<<<<< HEAD
    If you set the properties as above, you need to make sure the directory "tmp" exists in your local path  
 12. Build the whole project and deploy.    
    ```
@@ -163,6 +226,14 @@ Release: https://oss.sonatype.org/service/local/staging/deploy/maven2
 
    Deploy griffin-core/target/ROOT.war to tomcat, start tomcat server, then you can follow the web UI steps [here](https://github.com/eBay/griffin/blob/master/griffin-doc/dockerUIguide.md#webui-test-case-guide).  
 13. You can also review the RESTful APIs through http://localhost:8080/api/v1/application.wadl
+=======
+   If you set the properties as above, you need to make sure the directory "tmp" exists in your local path
+12. Build the whole project and deploy griffin-core/target/ROOT.war to tomcat
+   ```
+   mvn install -DskipTests
+   ```
+13. Then you can review the RESTful APIs through http://localhost:8080/api/v1/application.wadl
+>>>>>>> 3bf3b459a1fa66db41574633bb9251f2f98c80b8
 
 ### How to develop
 In dev environment, you can run backend REST service and frontend UI seperately. The majority of the backend code logics are in the [griffin-core](https://github.com/eBay/griffin/tree/master/griffin-core) project. So, to start backend, please import maven project Griffin into eclipse, right click ***griffin-core->Run As->Run On Server***

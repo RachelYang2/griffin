@@ -102,6 +102,7 @@ public class DataAssetServiceImpl implements DataAssetService {
 	protected DataAsset ofEntity(DBObject o) {
 	    return new DataAsset(o);
 	}
+
     @Override
 	public int createDataAsset(DataAssetInput input)
 			throws BarkDbOperationException {
@@ -171,7 +172,7 @@ public class DataAssetServiceImpl implements DataAssetService {
 			logger.debug("log: new record inserted" + seq);
 			dataAssetRepo.save(da);
 
-			//create new total count dqmodel
+			//create new total count dqmodel, and put it into schedule
 			{
 				ModelInput tempCountModel = new ModelInput();
 				ModelBasicInputNew basic = new ModelBasicInputNew();
@@ -192,7 +193,9 @@ public class DataAssetServiceImpl implements DataAssetService {
 				extra.setSrcDb(input.getPlatform());
 				tempCountModel.setBasic(basic);
 				tempCountModel.setExtra(extra);
-				dqModelService.newModel(tempCountModel);
+				DqModel totalCountModel = dqModelService.newModel(tempCountModel);
+				// enable schedule for total count model without verify
+				dqModelService.enableSchedule4Model(totalCountModel);
 			}
 
 			return 0;
@@ -333,7 +336,7 @@ public class DataAssetServiceImpl implements DataAssetService {
 	@Override
 	public void removeAssetById(Long id) throws BarkDbOperationException {
 		try {
-			removeRelatedModels(id);
+			removeModelsOfAsset(id);
 
 			dataAssetRepo.delete(id);
 		} catch (Exception e) {
@@ -342,12 +345,10 @@ public class DataAssetServiceImpl implements DataAssetService {
 
 	}
 
-	//remove all the models related with the given data asset
-	private int removeRelatedModels(Long dataAssetId) {
+	private void removeModelsOfAsset(Long dataAssetId) {
 		try {
 			DataAsset da = dataAssetRepo.getById(dataAssetId);
 			if (da != null) {
-				//delete all the accuracy models with this given source asset
 				List<DqModel> models = dqModelRepo.getByDataAsset(da);
 				for(DqModel each : models) {
 					dqModelService.deleteModel(each.getModelName());
@@ -356,8 +357,6 @@ public class DataAssetServiceImpl implements DataAssetService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return 0;
 	}
 
 }
