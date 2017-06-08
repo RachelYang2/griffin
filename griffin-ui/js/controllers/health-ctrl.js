@@ -160,19 +160,13 @@ define(['./module'], function (controllers) {
                     // }
                     // param.event.event.preventDefault();
                     if (param.data.name) {
-
-                        showBig(param.data.name);
+                        // $location.path('/#/detailed/'+param.data.name);
+                        window.location.href = '/#/detailed/'+param.data.name;
+                        // showBig(param.data.name);
                         // return false;
                     }
                 });
 
-        }
-
-        var showBig = function(metricName){
-          var metricDetailUrl = $config.uri.metricdetail + '/' + metricName;
-          $http.get(metricDetailUrl).success(function (data){
-            $rootScope.showBigChart($barkChart.getOptionBig(data));
-          });
         }
 
         $scope.$on('resizeHandler', function(e) {

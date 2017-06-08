@@ -165,7 +165,9 @@ define(['./module'], function(controllers) {
           var metricDetailUrl = $config.uri.metricdetail + '/' + t.name;
           // var metricDetailUrl = '/js/mock_data/anom.json';
           $http.get(metricDetailUrl).success(function (data){
-            $rootScope.showBigChart($barkChart.getOptionBig(data));
+            // $rootScope.showBigChart($barkChart.getOptionBig(data));
+            // $location.path('/#/detailed/'+t.name);
+            window.location.href = '/#/detailed/'+t.name;
           });
 
         }

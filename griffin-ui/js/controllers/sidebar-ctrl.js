@@ -14,7 +14,7 @@
 */
 define(['./module'], function(controllers) {
     'use strict';
-    controllers.controller('SideBarCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope', function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope) {
+    controllers.controller('SideBarCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope','$location', function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope,$location) {
 
         var echarts = require('echarts');
 
@@ -61,7 +61,9 @@ define(['./module'], function(controllers) {
 
             $('#'+chartId).unbind('click');
             $('#'+chartId).click(function() {
-              showBig($scope.briefmetrics[parentIndex].metrics[index]);
+              // showBig($scope.briefmetrics[parentIndex].metrics[index]);
+              // $location.path('/#/detailed/'+$scope.briefmetrics[parentIndex].metrics[index]);
+              window.location.href = '/#/detailed/'+$scope.briefmetrics[parentIndex].metrics[index].name;
             });
 
         };
